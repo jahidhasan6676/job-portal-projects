@@ -4,6 +4,7 @@ import registerLottieData from '../../assets/lottie/register.json';
 import AuthContext from '../../context/AuthContext/AuthContext';
 import SocialLogin from '../Shared/socialAuth/SocialLogin';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const SignIn = () => {
     const {loginUser} = useContext(AuthContext);
     const location = useLocation();
@@ -22,8 +23,7 @@ const SignIn = () => {
 
         loginUser(email,password)
         .then(result => {
-            console.log("sign In", result.user);
-            navigate(from)
+            console.log("sign In", result.user.email);
         })
         .catch(error => {
             console.log(error)

@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import UseAuth from "../../hooks/UseAuth";
+import axios from "axios";
+import useAxios from "../../hooks/useAxios";
 
 
 const MyApplication = () => {
-    const { user } = UseAuth();
+    const { user,setLoading } = UseAuth();
     const [jobs, setJobs] = useState([]);
+    const axiosSecure = useAxios();
+    console.log("email check", user?.email)
 
     useEffect(() => {
-        fetch(`http://localhost:5000/job-application?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => {
-                setJobs(data)
-            })
-    }, [user?.email])
+        if (user?.email) {
+            axiosSecure
+                .get(`/job-application?email=${user.email}`)
+                .then((res) => {
+                    setJobs(res.data);
+                })
+                .catch((err) => console.error(err));
+        }
+    }, [user?.email, axiosSecure]);
 
+    if (!user) return <p>Loading user data...</p>;
 
     return (
         <div className="py-10">
@@ -39,7 +47,7 @@ const MyApplication = () => {
                         <tbody>
                             {/* row 1 */}
                             {
-                                jobs.map(job => <tr key={job._id}>
+                                jobs?.map(job => <tr key={job._id}>
                                     <th>
                                         <label>
                                             <input type="checkbox" className="checkbox" />
@@ -82,3 +90,12 @@ const MyApplication = () => {
 };
 
 export default MyApplication;
+
+ // fetch(`https://job-portal-projects-server.vercel.app/job-application?email=${user?.email}`)
+        //     .then(res => res.json())
+        //     .then(data => {
+        //         setJobs(data)
+        //     })
+
+    //    axios.get(`https://job-portal-projects-server.vercel.app/job-application?email=${user?.email}`, {withCredentials:true})
+    //    .then(res => setJobs(res.data))

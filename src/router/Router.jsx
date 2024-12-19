@@ -28,7 +28,7 @@ import ViewApplication from "../pages/viewApplication/ViewApplication";
         {
           path:"/jobDetails/:id",
           element:<PrivateRoute><JobDetails></JobDetails></PrivateRoute>,
-          loader:({params})=>fetch(`http://localhost:5000/jobs/${params.id}`)
+          loader:({params})=>fetch(`https://job-portal-projects-server.vercel.app/jobs/${params.id}`)
         },
         {
           path:"/jobApply/:id",
@@ -52,12 +52,12 @@ import ViewApplication from "../pages/viewApplication/ViewApplication";
         },
         {
           path:"/myApplication",
-          element:<MyApplication></MyApplication>
+          element:<PrivateRoute><MyApplication></MyApplication></PrivateRoute>
         },
         {
           path:"/viewApplication/:job_id",
           element:<PrivateRoute><ViewApplication></ViewApplication></PrivateRoute>,
-          loader:({params})=> fetch(`http://localhost:5000/job-application/jobs/${params.job_id}`)
+          loader:({params})=> fetch(`https://job-portal-projects-server.vercel.app/job-application/jobs/${params.job_id}`)
         }
       ]
     },

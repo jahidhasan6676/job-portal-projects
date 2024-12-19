@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AuthContext from './AuthContext/AuthContext';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import auth from '../firebase/firebaseConfig';
+import axios from 'axios';
 
 
 const AuthProvider = ({children}) => {
@@ -31,11 +32,29 @@ const AuthProvider = ({children}) => {
         return signInWithPopup(auth, googleProvider);
     }
 
-
+// https://job-portal-projects-server.vercel.app/
     useEffect(()=> {
        const unsubscribe = onAuthStateChanged(auth, currentUser =>{
             setUser(currentUser);
-            setLoading(false);
+            console.log('state captured', currentUser?.email)
+            if(currentUser?.email){
+                const user = {email: currentUser.email};
+                axios.post("https://job-portal-projects-server.vercel.app/jwt", user, {withCredentials:true})
+                .then(res=> {
+                console.log("login",res.data);
+                setLoading(false);
+            })
+            }
+            else{
+                axios.post("https://job-portal-projects-server.vercel.app/logout", {}, {
+                    withCredentials: true
+                })
+                .then(res => {
+                console.log("logout", res.data);
+                setLoading(false);
+            })
+            }
+            
            
         })
         return () =>{
