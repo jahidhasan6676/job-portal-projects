@@ -91,11 +91,11 @@ const MyApplication = () => {
 
 export default MyApplication;
 
- // fetch(`https://job-portal-projects-server.vercel.app/job-application?email=${user?.email}`)
+ // fetch(`http://localhost:5000/job-application?email=${user?.email}`)
         //     .then(res => res.json())
         //     .then(data => {
         //         setJobs(data)
         //     })
 
-    //    axios.get(`https://job-portal-projects-server.vercel.app/job-application?email=${user?.email}`, {withCredentials:true})
+    //    axios.get(`http://localhost:5000/job-application?email=${user?.email}`, {withCredentials:true})
     //    .then(res => setJobs(res.data))

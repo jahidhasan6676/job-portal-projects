@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.selected{
+    
+    background-color: orange;
+}
+/* .selected button{
+    text-align: center;
+    margin-right: 10px;
+} */

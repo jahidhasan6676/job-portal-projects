@@ -32,21 +32,21 @@ const AuthProvider = ({children}) => {
         return signInWithPopup(auth, googleProvider);
     }
 
-// https://job-portal-projects-server.vercel.app/
+// http://localhost:5000/
     useEffect(()=> {
        const unsubscribe = onAuthStateChanged(auth, currentUser =>{
             setUser(currentUser);
             console.log('state captured', currentUser?.email)
             if(currentUser?.email){
                 const user = {email: currentUser.email};
-                axios.post("https://job-portal-projects-server.vercel.app/jwt", user, {withCredentials:true})
+                axios.post("http://localhost:5000/jwt", user, {withCredentials:true})
                 .then(res=> {
                 console.log("login",res.data);
                 setLoading(false);
             })
             }
             else{
-                axios.post("https://job-portal-projects-server.vercel.app/logout", {}, {
+                axios.post("http://localhost:5000/logout", {}, {
                     withCredentials: true
                 })
                 .then(res => {
